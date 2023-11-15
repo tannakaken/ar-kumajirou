@@ -10,16 +10,12 @@ const ARMarkerModel = () => {
       <ARMarker
         type={"pattern"}
         patternUrl={"data/pattern.patt"}
-        // onMarkerFound={() => {
-        //   if (groupRef.current) {
-        //     groupRef.current.visible = false;
-        //   }
-        // }}
-        // onMarkerLost={() => {
-        //   if (groupRef.current) {
-        //     groupRef.current.visible = true;
-        //   }
-        // }}
+        onMarkerFound={() => {
+          console.warn("found");
+        }}
+        onMarkerLost={() => {
+          console.warn("lost");
+        }}
       >
         <TCanvas />
       </ARMarker>
@@ -40,7 +36,7 @@ function App() {
         <ARCanvas
           dpr={window.devicePixelRatio}
           onCameraStreamReady={() => {
-            console.warn("resdy");
+            console.warn("ready");
           }}
           onCameraStreamError={() => console.error("Camera stream error")}
           onCreated={({ gl }) => {

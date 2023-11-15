@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 // import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Stage } from "@react-three/drei";
 import { ModelUI } from "./ModelUI";
 
 // type Props = {
@@ -21,25 +21,27 @@ export const TCanvas = () => {
       <OrbitControls />
       <ambientLight />
       <pointLight position={[0, 10, -5]} intensity={100.0} />
-      <mesh
-        position={[0, 5, 10]}
-        scale={1}
-        onClick={() => {
-          state.count += 1;
-          console.warn(state.count);
-        }}
-      >
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={"orange"} />
-      </mesh>
-      <ModelUI
-        assetType="FBX"
-        asset="assets/SwingDancing.fbx"
-        position={[0, 0, 10]}
-        rotation={[0, 180, 0]}
-        scale={0.01}
-        state={state}
-      />
+      <Stage>
+        <mesh
+          position={[0, 5, 8]}
+          scale={1}
+          onClick={() => {
+            state.count += 1;
+            console.warn(state.count);
+          }}
+        >
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial color={"orange"} />
+        </mesh>
+        <ModelUI
+          assetType="FBX"
+          asset="assets/SwingDancing.fbx"
+          position={[0, 0, 8]}
+          rotation={[0, 180, 0]}
+          scale={0.05}
+          state={state}
+        />
+      </Stage>
     </>
   );
 };
