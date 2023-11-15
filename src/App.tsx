@@ -1,7 +1,8 @@
-import { Stage } from "@react-three/drei";
 import "./App.css";
 import { ARMarker } from "./components/ARMarker";
-import { AnimationModelArea } from "./components/AnimationModelArea";
+import { Suspense } from "react";
+import { ARCanvas } from "./components/ARCanvas";
+import { TCanvas } from "./components/TCanvas";
 
 const ARMarkerModel = () => {
   return (
@@ -20,9 +21,7 @@ const ARMarkerModel = () => {
         //   }
         // }}
       >
-        <Stage environment={null}>
-          <AnimationModelArea />
-        </Stage>
+        <TCanvas />
       </ARMarker>
     </>
   );
@@ -37,7 +36,21 @@ function App() {
       }}
     >
       {/* <AnimationModelArea {...modelAsset} /> */}
-      <ARMarkerModel />
+      <Suspense fallback={null}>
+        <ARCanvas
+          dpr={window.devicePixelRatio}
+          onCameraStreamReady={() => {
+            console.warn("resdy");
+          }}
+          onCameraStreamError={() => console.error("Camera stream error")}
+          onCreated={({ gl }) => {
+            gl.setSize(window.innerWidth, window.innerHeight);
+          }}
+          patternRatio={0.5}
+        >
+          <ARMarkerModel />
+        </ARCanvas>
+      </Suspense>
     </div>
   );
 }
