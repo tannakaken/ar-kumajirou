@@ -1,47 +1,33 @@
-import { useMemo } from "react";
-// import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage } from "@react-three/drei";
+import { useCallback, useMemo } from "react";
+import { OrbitControls, Sphere } from "@react-three/drei";
 import { ModelUI } from "./ModelUI";
 
-// type Props = {
-//   fov?: number;
-//   position?: [number, number, number];
-// };
-
 export const TCanvas = () => {
-  // const { fov = 50, position = [0, 0, -5] } = props;
   const state = useMemo(
     () => ({
       count: 0,
     }),
     []
   );
+  const onClick = useCallback(() => {
+    state.count += 1;
+  }, [state]);
   return (
     <>
       <OrbitControls />
       <ambientLight />
       <pointLight position={[0, 10, -5]} intensity={100.0} />
-      <Stage>
-        <mesh
-          position={[0, 5, 8]}
-          scale={1}
-          onClick={() => {
-            state.count += 1;
-            console.warn(state.count);
-          }}
-        >
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color={"orange"} />
-        </mesh>
-        <ModelUI
-          assetType="FBX"
-          asset="assets/SwingDancing.fbx"
-          position={[0, 0, 8]}
-          rotation={[0, 180, 0]}
-          scale={0.05}
-          state={state}
-        />
-      </Stage>
+      <ModelUI
+        assetType="FBX"
+        asset="assets/SwingDancing.fbx"
+        position={[0, 0, 0]}
+        rotation={[0, 0, 0]}
+        scale={0.005}
+        state={state}
+      />
+      <Sphere position={[0, 1, 1]} scale={[1, 1, 1]} onClick={onClick}>
+        <meshStandardMaterial color={"orange"} transparent opacity={0} />
+      </Sphere>
     </>
   );
 };
