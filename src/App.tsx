@@ -23,6 +23,8 @@ const ARMarkerModel = () => {
   );
 };
 
+const Fallback = () => <p>さあ、クマとダンスを踊りましょう。</p>;
+
 function App() {
   return (
     <div
@@ -31,8 +33,7 @@ function App() {
         height: "100vh",
       }}
     >
-      {/* <AnimationModelArea {...modelAsset} /> */}
-      <Suspense fallback={null}>
+      <Suspense fallback={<Fallback />}>
         <ARCanvas
           dpr={window.devicePixelRatio}
           onCameraStreamReady={() => {
